@@ -45,7 +45,7 @@ export default function Dashboard() {
                   {...{
                     isLoading: isLoading,
                     total: 203,
-                    label: 'Total Income',
+                    label: 'Pruebas',
                     icon: <StorefrontTwoToneIcon fontSize="inherit" />
                   }}
                 />
