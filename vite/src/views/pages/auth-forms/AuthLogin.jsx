@@ -63,10 +63,24 @@ export default function AuthLogin() {
     setError('');
 
     try {
-      await authService.login(formData.email, formData.password);
-      navigate('/dashboard'); // Redirigir al dashboard
+      console.log('Intentando login...', formData); // DEBUG
+      const response = await authService.login(formData.email, formData.password);
+      console.log('Respuesta login:', response); // DEBUG
+      
+      const token = localStorage.getItem('token');
+      console.log('Token guardado:', token); // DEBUG
+      
+      if (!token) {
+        setError('Error: No se recibió el token del servidor');
+        return;
+      }
+      
+      // Forzar recarga completa para que PrivateRoute detecte el token
+      window.location.href = '/free/dashboard/default';
+      
     } catch (err) {
-      console.error('Error de login:', err);
+      console.error('Error completo de login:', err); // DEBUG
+      console.error('Respuesta del servidor:', err.response); // DEBUG
       setError(err.response?.data?.message || 'Credenciales inválidas');
     } finally {
       setLoading(false);

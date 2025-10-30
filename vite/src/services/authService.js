@@ -7,9 +7,19 @@ export const authService = {
   login: async (email, password) => {
     const response = await axios.post(`${API_URL}/login`, { email, password });
     
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+    console.log('Respuesta completa del backend:', response.data); // DEBUG
+    
+    // IMPORTANTE: Tu backend devuelve el token en data.data.accessToken
+    const token = response.data.data?.accessToken;
+    const user = response.data.data?.usuario;
+    
+    if (token) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      console.log('Token guardado exitosamente:', token); // DEBUG
+    } else {
+      console.error('No se encontró token en la respuesta'); // DEBUG
+      throw new Error('No se recibió el token del servidor');
     }
     
     return response.data;
