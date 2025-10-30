@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3005/api/auth';
+const API_URL = 'https://sistemabackendacademica.onrender.com/api/auth';
 
 export const authService = {
   // Login y guardar token
